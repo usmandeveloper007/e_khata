@@ -30,3 +30,6 @@ export 'core/extentions/custom_button.dart';
 
 // packages
 export 'package:provider/provider.dart';
+
+// models
+export 'model/book_model.dart';

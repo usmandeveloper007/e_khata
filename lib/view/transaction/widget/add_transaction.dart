@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cash_book/path_file.dart';
 
 class AddTransaction {
@@ -25,6 +27,77 @@ class AddTransaction {
                         ? AppStrings.addCashInAmount
                         : AppStrings.addCashOutAmount,
                   ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          homeProvider.pickDate(context);
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            const Icon(
+                              Icons.calendar_month,
+                              color: AppColors.blackColor,
+                              size: 24,
+                            ),
+                            const SizedBox(
+                              width: 5,
+                            ),
+                            Consumer<HomeProvider>(
+                              builder: (context, dateProvider, child) {
+                                return Text(
+                                  dateProvider.formattedDate,
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    color: AppColors.blackColor,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                );
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          homeProvider.pickTime(context);
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            const Icon(
+                              Icons.timelapse_sharp,
+                              color: AppColors.blackColor,
+                              size: 24,
+                            ),
+                            const SizedBox(
+                              width: 5,
+                            ),
+                            Consumer<HomeProvider>(
+                              builder: (context, timeProvider, child) {
+                                return Text(
+                                  timeProvider.formattedTime,
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    color: AppColors.blackColor,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                );
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 10),
                     child: CustomTextField(
@@ -37,10 +110,29 @@ class AddTransaction {
                       hintTextColor: AppColors.blackColor,
                     ),
                   ),
+                  DropdownButtonFormField(
+                    items: const [
+                      DropdownMenuItem(
+                        value: 'online',
+                        child: Text('Online'),
+                      ),
+                      DropdownMenuItem(
+                        value: 'cash',
+                        child: Text('Cash'),
+                      ),
+                    ],
+                    onChanged: (value) {
+                      log(value!);
+                      homeProvider.updatePaymentMode(value);
+                    },
+                    decoration: const InputDecoration(
+                      labelText: 'Select Payment Mode',
+                    ),
+                  ),
                   CustomButton(
                     onPress: () {
-                      homeProvider.addBookToList(homeProvider.bookTitle.text);
-                      homeProvider.bookTitle.clear();
+                      homeProvider.transactionLog();
+                      homeProvider.amount.clear();
                       Navigator.of(context).pop();
                     },
                     text: AppStrings.addTransaction,
