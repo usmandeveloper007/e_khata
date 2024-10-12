@@ -3,8 +3,7 @@ import 'dart:developer';
 import 'package:cash_book/path_file.dart';
 
 class AddTransaction {
-  static showAddTransactionBottomSheet(
-      context, HomeProvider homeProvider, bool isCashIn) {
+  static showAddTransactionBottomSheet(context, HomeProvider homeProvider) {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -23,7 +22,7 @@ class AddTransaction {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    isCashIn
+                    homeProvider.isCashIn!
                         ? AppStrings.addCashInAmount
                         : AppStrings.addCashOutAmount,
                   ),
@@ -102,11 +101,13 @@ class AddTransaction {
                     padding: const EdgeInsets.symmetric(vertical: 10),
                     child: CustomTextField(
                       controller: homeProvider.amount,
-                      hintText: isCashIn
+                      keyboardType: TextInputType.number,
+                      hintText: homeProvider.isCashIn!
                           ? 'Please enter the cash in amount'
                           : 'Please enter the cash out amount',
-                      labelText:
-                          isCashIn ? 'Cash In Amount' : 'Cash Out Amount',
+                      labelText: homeProvider.isCashIn!
+                          ? 'Cash In Amount'
+                          : 'Cash Out Amount',
                       hintTextColor: AppColors.blackColor,
                     ),
                   ),
@@ -127,10 +128,41 @@ class AddTransaction {
                     },
                     decoration: const InputDecoration(
                       labelText: 'Select Payment Mode',
+                      labelStyle: TextStyle(color: AppColors.primaryColor),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          width: 2,
+                          color: AppColors.blackColor,
+                        ),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          width: 2,
+                          color: AppColors.blackColor,
+                        ),
+                      ),
+                      border: OutlineInputBorder(
+                          borderSide: BorderSide(
+                        width: 2,
+                        color: AppColors.blackColor,
+                      )),
                     ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  CustomTextField(
+                    controller: homeProvider.purpose,
+                    hintText: 'Please enter the reason...',
+                    labelText: 'Reason',
+                    hintTextColor: AppColors.blackColor,
+                    maxLines: 2,
                   ),
                   CustomButton(
                     onPress: () {
+                      homeProvider.paymentType(homeProvider.isCashIn!);
+                      homeProvider
+                          .addTransactionToSelectedBook(homeProvider.isCashIn!);
                       homeProvider.transactionLog();
                       homeProvider.amount.clear();
                       Navigator.of(context).pop();
