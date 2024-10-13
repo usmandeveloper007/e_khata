@@ -9,176 +9,339 @@ class TransactionScreen extends StatefulWidget {
 
 class _TransactionScreenState extends State<TransactionScreen> {
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Consumer<HomeProvider>(
         builder: (context, homeProvider, child) {
           return Scaffold(
-            body: SingleChildScrollView(
-              child: Column(
-                children: [
-                  Container(
-                    width: context.screenWidth,
-                    margin: const EdgeInsets.symmetric(
-                        horizontal: 10, vertical: 10),
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 10, vertical: 10),
-                    decoration: BoxDecoration(
-                      color: Colors.blue[100],
-                      border: Border.all(
-                        color: AppColors.primaryColor,
-                        width: 2,
-                      ),
-                      borderRadius: BorderRadius.circular(20),
+            body: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  width: context.screenWidth,
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                  decoration: BoxDecoration(
+                    color: Colors.blue[100],
+                    border: Border.all(
+                      color: AppColors.primaryColor,
+                      width: 2,
                     ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const Text(
-                              AppStrings.bookTitle,
-                              style: TextStyle(
-                                color: AppColors.blackColor,
-                                fontSize: 14,
-                              ),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text(
+                            AppStrings.bookTitle,
+                            style: TextStyle(
+                              color: AppColors.blackColor,
+                              fontSize: 14,
                             ),
-                            Text(
-                              homeProvider.selectedBookTitle.toString(),
-                              style: const TextStyle(
-                                color: AppColors.blackColor,
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                              ),
+                          ),
+                          Text(
+                            homeProvider.selectedBookTitle.toString(),
+                            style: const TextStyle(
+                              color: AppColors.blackColor,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
                             ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: context.screenHeight * 0.015,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const Text(
-                              AppStrings.netBalance,
-                              style: TextStyle(
-                                color: AppColors.blackColor,
-                                fontSize: 18,
-                              ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: context.screenHeight * 0.015,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text(
+                            AppStrings.netBalance,
+                            style: TextStyle(
+                              color: AppColors.blackColor,
+                              fontSize: 18,
                             ),
-                            Consumer<HomeProvider>(
-                              builder: (context, homeProvider, child) {
-                                return Text(
-                                  homeProvider.netBalance.toString(),
-                                  style: const TextStyle(
-                                      color: AppColors.blackColor,
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.w500),
-                                );
-                              },
+                          ),
+                          Consumer<HomeProvider>(
+                            builder: (context, homeProvider, child) {
+                              return Text(
+                                homeProvider
+                                    .bookList[homeProvider.selectedBookIndex]
+                                    .netBalance
+                                    .toString(),
+                                style: const TextStyle(
+                                    color: AppColors.blackColor,
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.w500),
+                              );
+                            },
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text(
+                            AppStrings.cashIn,
+                            style: TextStyle(
+                              color: AppColors.blackColor,
+                              fontSize: 14,
                             ),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const Text(
-                              AppStrings.cashIn,
-                              style: TextStyle(
-                                color: AppColors.blackColor,
-                                fontSize: 14,
-                              ),
+                          ),
+                          Consumer<HomeProvider>(
+                            builder: (context, homeProvider, child) {
+                              return Text(
+                                homeProvider
+                                    .bookList[homeProvider.selectedBookIndex]
+                                    .totalCashIn
+                                    .toString(),
+                                style: const TextStyle(
+                                    color: AppColors.greenColor,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w500),
+                              );
+                            },
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text(
+                            AppStrings.cashOut,
+                            style: TextStyle(
+                              color: AppColors.blackColor,
+                              fontSize: 14,
                             ),
-                            Consumer<HomeProvider>(
-                              builder: (context, homeProvider, child) {
-                                return Text(
-                                  homeProvider.totalCashIn.toString(),
-                                  style: const TextStyle(
-                                      color: AppColors.greenColor,
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w500),
-                                );
-                              },
-                            ),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const Text(
-                              AppStrings.cashOut,
-                              style: TextStyle(
-                                color: AppColors.blackColor,
-                                fontSize: 14,
-                              ),
-                            ),
-                            Consumer<HomeProvider>(
-                              builder: (context, homeProvider, child) {
-                                return Text(
-                                  homeProvider.totalCashOut.toString(),
-                                  style: const TextStyle(
-                                      color: AppColors.redColor,
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w500),
-                                );
-                              },
-                            ),
-                          ],
-                        ),
-                      ],
+                          ),
+                          Consumer<HomeProvider>(
+                            builder: (context, homeProvider, child) {
+                              return Text(
+                                homeProvider
+                                    .bookList[homeProvider.selectedBookIndex]
+                                    .totalCashOut
+                                    .toString(),
+                                style: const TextStyle(
+                                    color: AppColors.redColor,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w500),
+                              );
+                            },
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 12),
+                  child: Text(
+                    "Transactions",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
-                  Text("Transactions"),
-                  homeProvider.bookList[homeProvider.selectedBookIndex]
-                          .transaction.isEmpty
-                      ? const SizedBox.shrink()
-                      : ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: homeProvider
-                              .bookList[homeProvider.selectedBookIndex]
-                              .transaction
-                              .length,
-                          itemBuilder: (context, index) {
-                            return Container(
-                              height: context.screenHeight * 0.1,
-                              width: context.screenWidth,
-                              decoration: BoxDecoration(
-                                color: AppColors.lightWhiteColor,
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              margin:
-                                  const EdgeInsets.symmetric(horizontal: 20),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    height: context.screenHeight * 0.03,
-                                    width: context.screenWidth * 0.15,
-                                    margin: const EdgeInsets.all(8),
-                                    decoration: BoxDecoration(
-                                      color: AppColors.blackColor,
-                                      borderRadius: BorderRadius.circular(20),
+                ),
+                homeProvider.bookList[homeProvider.selectedBookIndex]
+                        .transaction.isEmpty
+                    ? const SizedBox.shrink()
+                    : Expanded(
+                        child: ListView.builder(
+                            shrinkWrap: true,
+                            scrollDirection: Axis.vertical,
+                            physics: const ScrollPhysics(),
+                            itemCount: homeProvider
+                                .bookList[homeProvider.selectedBookIndex]
+                                .transaction
+                                .length,
+                            itemBuilder: (context, index) {
+                              return Container(
+                                width: context.screenWidth,
+                                decoration: BoxDecoration(
+                                  color: AppColors.transactionBgColor,
+                                  borderRadius: BorderRadius.circular(15),
+                                ),
+                                margin: const EdgeInsets.symmetric(
+                                    horizontal: 20, vertical: 5),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      width: context.screenWidth * 0.15,
+                                      margin: const EdgeInsets.symmetric(
+                                          horizontal: 12, vertical: 12),
+                                      decoration: BoxDecoration(
+                                        color: homeProvider
+                                                    .bookList[homeProvider
+                                                        .selectedBookIndex]
+                                                    .transaction[index]
+                                                    .type ==
+                                                'Cash In'
+                                            ? AppColors.greenLightColor
+                                            : AppColors.redLightColor,
+                                        borderRadius: BorderRadius.circular(5),
+                                      ),
+                                      child: Center(
+                                        child: Text(
+                                          homeProvider
+                                              .bookList[homeProvider
+                                                  .selectedBookIndex]
+                                              .transaction[index]
+                                              .type!
+                                              .toString(),
+                                          style: TextStyle(
+                                            color: homeProvider
+                                                        .bookList[homeProvider
+                                                            .selectedBookIndex]
+                                                        .transaction[index]
+                                                        .type ==
+                                                    'Cash In'
+                                                ? AppColors.greenColor
+                                                : AppColors.redColor,
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
                                     ),
-                                    child: Text(
-                                      homeProvider
-                                          .bookList[
-                                              homeProvider.selectedBookIndex]
-                                          .transaction[index]
-                                          .type!
-                                          .toString(),
-                                      style: const TextStyle(
-                                          color: AppColors.whiteColor),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 10),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            homeProvider
+                                                        .bookList[homeProvider
+                                                            .selectedBookIndex]
+                                                        .transaction[index]
+                                                        .type ==
+                                                    'Cash In'
+                                                ? homeProvider
+                                                    .bookList[homeProvider
+                                                        .selectedBookIndex]
+                                                    .transaction[index]
+                                                    .cashInAmount
+                                                    .toString()
+                                                : homeProvider
+                                                    .bookList[homeProvider
+                                                        .selectedBookIndex]
+                                                    .transaction[index]
+                                                    .cashOutAmount
+                                                    .toString(),
+                                            style: TextStyle(
+                                              color: homeProvider
+                                                          .bookList[homeProvider
+                                                              .selectedBookIndex]
+                                                          .transaction[index]
+                                                          .type ==
+                                                      'Cash In'
+                                                  ? AppColors.greenColor
+                                                  : AppColors.redColor,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 20,
+                                            ),
+                                          ),
+                                          RichText(
+                                            text: TextSpan(
+                                              text: 'Balance: ',
+                                              style: const TextStyle(
+                                                  color: AppColors.black87,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 11),
+                                              children: [
+                                                TextSpan(
+                                                  text: homeProvider
+                                                      .bookList[homeProvider
+                                                          .selectedBookIndex]
+                                                      .transaction[index]
+                                                      .balanceAfterTransaction
+                                                      .toString(),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                            );
-                          }),
-                ],
-              ),
+                                    const Divider(
+                                      indent: 10,
+                                      endIndent: 10,
+                                      thickness: 0.2,
+                                      height: 0,
+                                      color: AppColors.greyColor,
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 10,
+                                          bottom: 8,
+                                          right: 10,
+                                          top: 14),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          RichText(
+                                            text: TextSpan(
+                                                text: 'Date: ',
+                                                style: const TextStyle(
+                                                  color: AppColors.greyColor,
+                                                  fontSize: 10,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                                children: [
+                                                  TextSpan(
+                                                    text: homeProvider
+                                                        .bookList[homeProvider
+                                                            .selectedBookIndex]
+                                                        .transaction[index]
+                                                        .dateTime
+                                                        .toString(),
+                                                  ),
+                                                ]),
+                                          ),
+                                          RichText(
+                                            text: TextSpan(
+                                                text: 'Time: ',
+                                                style: const TextStyle(
+                                                  color: AppColors.greyColor,
+                                                  fontSize: 10,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                                children: [
+                                                  TextSpan(
+                                                    text: homeProvider
+                                                        .bookList[homeProvider
+                                                            .selectedBookIndex]
+                                                        .transaction[index]
+                                                        .time
+                                                        .toString(),
+                                                  ),
+                                                ]),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            }),
+                      ),
+              ],
             ),
             bottomNavigationBar: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

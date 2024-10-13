@@ -163,8 +163,10 @@ class AddTransaction {
                       homeProvider.paymentType(homeProvider.isCashIn!);
                       homeProvider
                           .addTransactionToSelectedBook(homeProvider.isCashIn!);
+
                       homeProvider.transactionLog();
                       homeProvider.amount.clear();
+                      homeProvider.purpose.clear();
                       Navigator.of(context).pop();
                     },
                     text: AppStrings.addTransaction,

@@ -45,7 +45,9 @@ class HomeProvider extends ChangeNotifier {
 
   void addBookToList(String bookTitle) {
     _bookList.add(
-      BookModel(title: bookTitle),
+      BookModel(
+        title: bookTitle,
+      ),
     );
     notifyListeners();
   }
@@ -77,9 +79,11 @@ class HomeProvider extends ChangeNotifier {
       if (isCashIn == true) {
         _totalCashIn = _totalCashIn! + parsedAmount;
         _netBalance = _netBalance! + parsedAmount;
+        _transactionType = 'Cash In';
       } else {
         _totalCashOut = _totalCashOut! + parsedAmount;
         _netBalance = _netBalance! - parsedAmount;
+        _transactionType = 'Cash Out';
       }
 
       log('New Net Balance: $_netBalance');
@@ -104,11 +108,9 @@ class HomeProvider extends ChangeNotifier {
 
   void paymentType(bool value) {
     _isCashIn = value;
-    value ? _transactionType = 'Cash In' : 'Cash Out';
-    notifyListeners();
     value
-        ? _cashInAmount == double.tryParse(amount.text)
-        : _cashOutAmount == double.tryParse(amount.text);
+        ? _cashInAmount = double.tryParse(amount.text)
+        : _cashOutAmount = double.tryParse(amount.text);
     notifyListeners();
   }
 
@@ -119,8 +121,6 @@ class HomeProvider extends ChangeNotifier {
       return [];
     }
   }
-
-  // transaction details
 
   // date & time functionality
   DateTime? _selectedDate;

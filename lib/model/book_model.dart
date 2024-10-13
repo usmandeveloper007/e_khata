@@ -1,13 +1,27 @@
 class BookModel {
   String? title;
+  double netBalance;
+  double totalCashIn;
+  double totalCashOut;
+
   List<Transaction> transaction;
   BookModel({
     required this.title,
+    this.netBalance = 0.0,
+    this.totalCashIn = 0.0,
+    this.totalCashOut = 0.0,
     this.transaction = const [],
   });
 
   void addTransaction(Transaction newTransaction) {
     transaction = [...transaction, newTransaction];
+    if (newTransaction.type == 'Cash In') {
+      totalCashIn += newTransaction.cashInAmount ?? 0.0;
+      netBalance += newTransaction.cashInAmount ?? 0.0;
+    } else {
+      totalCashOut += newTransaction.cashOutAmount ?? 0.0;
+      netBalance -= newTransaction.cashOutAmount ?? 0.0;
+    }
   }
 }
 
