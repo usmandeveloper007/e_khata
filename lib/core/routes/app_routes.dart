@@ -9,6 +9,9 @@ class AppRoutes {
         return MaterialPageRoute(builder: (_) => const HomeScreen());
       case RouteNames.transactionScreen:
         return MaterialPageRoute(builder: (_) => const TransactionScreen());
+      case RouteNames.transactionDetailScreen:
+        return MaterialPageRoute(
+            builder: (_) => const TransactionDetailScreen());
 
       default:
         return MaterialPageRoute(

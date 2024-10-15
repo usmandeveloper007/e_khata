@@ -5,6 +5,7 @@ export 'package:flutter/material.dart';
 export 'view/splash/splash_screen.dart';
 export 'view/home/home_screen.dart';
 export 'view/transaction/transaction_screen.dart';
+export 'view/transaction/transaction_detail_screen.dart';
 
 // widgets
 export 'view/home/widgets/add_book.dart';
