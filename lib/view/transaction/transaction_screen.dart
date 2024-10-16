@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cash_book/path_file.dart';
 
 class TransactionScreen extends StatefulWidget {
@@ -164,9 +166,11 @@ class _TransactionScreenState extends State<TransactionScreen> {
                             itemBuilder: (context, index) {
                               return GestureDetector(
                                 onTap: () {
+                                  log(index.toString());
                                   Navigator.of(context).pushNamed(
                                     RouteNames.transactionDetailScreen,
                                     arguments: index,
+
                                     // arguments: {
                                     //   'bookTitle': homeProvider
                                     //       .bookList[

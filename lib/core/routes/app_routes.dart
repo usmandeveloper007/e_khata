@@ -10,8 +10,10 @@ class AppRoutes {
       case RouteNames.transactionScreen:
         return MaterialPageRoute(builder: (_) => const TransactionScreen());
       case RouteNames.transactionDetailScreen:
+        final transactionIndex = settings.arguments as int?;
         return MaterialPageRoute(
-            builder: (_) => const TransactionDetailScreen());
+            builder: (_) =>
+                TransactionDetailScreen(transactionIndex: transactionIndex));
 
       default:
         return MaterialPageRoute(

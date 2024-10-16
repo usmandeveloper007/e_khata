@@ -3,7 +3,8 @@ import 'dart:developer';
 import 'package:cash_book/path_file.dart';
 
 class TransactionDetailScreen extends StatefulWidget {
-  const TransactionDetailScreen({super.key});
+  final int? transactionIndex;
+  const TransactionDetailScreen({super.key, this.transactionIndex});
 
   @override
   State<TransactionDetailScreen> createState() =>
@@ -14,10 +15,8 @@ class _TransactionDetailScreenState extends State<TransactionDetailScreen> {
   @override
   Widget build(BuildContext context) {
     // Safely handle null arguments
-    final int? transactionIndex =
-        ModalRoute.of(context)!.settings.arguments as int?;
 
-    if (transactionIndex == null) {
+    if (widget.transactionIndex == null) {
       // If transactionIndex is null, handle the error
       log('Transaction index is null!');
       return const Scaffold(
@@ -27,7 +26,7 @@ class _TransactionDetailScreenState extends State<TransactionDetailScreen> {
       );
     }
 
-    log(transactionIndex.toString());
+    log(widget.transactionIndex.toString());
     // final String bookTitle =
     //     ModalRoute.of(context)!.settings.arguments as String;
     // final String transactionType =
@@ -71,9 +70,11 @@ class _TransactionDetailScreenState extends State<TransactionDetailScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           const Text("Transaction Type: "),
-                          // Text(homeProvider
-                          //     .bookList[homeProvider.selectedBookIndex].transaction[]
-                          //     .toString()),
+                          Text(homeProvider
+                              .bookList[homeProvider.selectedBookIndex]
+                              .transaction[widget.transactionIndex!]
+                              .type
+                              .toString()),
                         ],
                       ),
                     ],
