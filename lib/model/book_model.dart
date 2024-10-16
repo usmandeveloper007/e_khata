@@ -22,6 +22,7 @@ class BookModel {
       totalCashOut += newTransaction.cashOutAmount ?? 0.0;
       netBalance -= newTransaction.cashOutAmount ?? 0.0;
     }
+    newTransaction.balanceAfterTransaction = netBalance;
   }
 }
 

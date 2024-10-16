@@ -15,6 +15,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
     return SafeArea(
       child: Consumer<HomeProvider>(
         builder: (context, homeProvider, child) {
+          homeProvider.transactionLog();
           return Scaffold(
             body: Column(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -170,49 +171,6 @@ class _TransactionScreenState extends State<TransactionScreen> {
                                   Navigator.of(context).pushNamed(
                                     RouteNames.transactionDetailScreen,
                                     arguments: index,
-
-                                    // arguments: {
-                                    //   'bookTitle': homeProvider
-                                    //       .bookList[
-                                    //           homeProvider.selectedBookIndex]
-                                    //       .title,
-                                    //   'transactionType': homeProvider
-                                    //       .bookList[
-                                    //           homeProvider.selectedBookIndex]
-                                    //       .transaction[index]
-                                    //       .type!
-                                    //       .toString(),
-                                    //   'transactionAmount': homeProvider
-                                    //               .bookList[homeProvider
-                                    //                   .selectedBookIndex]
-                                    //               .transaction[index]
-                                    //               .type ==
-                                    //           'Cash In'
-                                    //       ? homeProvider
-                                    //           .bookList[homeProvider
-                                    //               .selectedBookIndex]
-                                    //           .transaction[index]
-                                    //           .cashInAmount
-                                    //           .toString()
-                                    //       : homeProvider
-                                    //           .bookList[homeProvider
-                                    //               .selectedBookIndex]
-                                    //           .transaction[index]
-                                    //           .cashOutAmount
-                                    //           .toString(),
-                                    //   'dateOfTransaction': homeProvider
-                                    //       .bookList[
-                                    //           homeProvider.selectedBookIndex]
-                                    //       .transaction[index]
-                                    //       .dateTime
-                                    //       .toString(),
-                                    //   'timeOfTransaction': homeProvider
-                                    //       .bookList[
-                                    //           homeProvider.selectedBookIndex]
-                                    //       .transaction[index]
-                                    //       .time
-                                    //       .toString(),
-                                    // });
                                   );
                                 },
                                 child: Container(
@@ -400,6 +358,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                 CustomButton(
                   onPress: () {
                     homeProvider.paymentType(true);
+                    homeProvider.updateTransactionType(true);
                     AddTransaction.showAddTransactionBottomSheet(
                         context, homeProvider);
                   },
@@ -410,6 +369,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                 CustomButton(
                   onPress: () {
                     homeProvider.paymentType(false);
+                    homeProvider.updateTransactionType(false);
                     AddTransaction.showAddTransactionBottomSheet(
                         context, homeProvider);
                   },

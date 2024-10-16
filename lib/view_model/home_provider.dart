@@ -5,17 +5,26 @@ import 'package:intl/intl.dart';
 
 class HomeProvider extends ChangeNotifier {
   HomeProvider() {
+    transactionLog();
     updateNullBalances();
   }
   void transactionLog() {
-    log(' book index:: $_selectedBookIndex');
-    log(' book title:: $_selectedBookTitle');
-    log(' transaction_amount:: ${amount.text.toString()}');
-    log(' transation_date:: $_selectedDate');
-    log(' transation_time:: $_selectedTime');
-    log(' transation_mode:: $_selectedPaymentMode');
-    log(' transation_type:: $transactionType');
-    log('All Transactions :: ${_bookList[_selectedBookIndex!].transaction.toString()}');
+    // Log all transactions in Map format
+    final transactions = _bookList[_selectedBookIndex!].transaction.map((t) {
+      return {
+        'bookTitle': t.bookTitle,
+        'netBalance': t.netBalance,
+        'cashInAmount': t.cashInAmount,
+        'cashOutAmount': t.cashOutAmount,
+        'balanceAfterTransaction': t.balanceAfterTransaction,
+        'time': t.time,
+        'type': t.type,
+        'dateTime': t.dateTime,
+        'purpose': t.purpose,
+        'modeOfPayment': t.modeOfPayment,
+      };
+    }).toList();
+    log("All Transactions for the book title : $_selectedBookTitle are --> $transactions");
   }
 
   TextEditingController bookTitle = TextEditingController();
@@ -71,32 +80,16 @@ class HomeProvider extends ChangeNotifier {
   void addTransactionToSelectedBook(bool paymentType) {
     if (_selectedBookIndex != null) {
       log('adding transaction!');
-      // calculating net balance
-      _netBalance ??= 0.0;
-      _totalCashIn ??= 0.0;
-      _totalCashOut ??= 0.0;
-      double parsedAmount = double.tryParse(amount.text) ?? 0;
-      if (isCashIn == true) {
-        _totalCashIn = _totalCashIn! + parsedAmount;
-        _netBalance = _netBalance! + parsedAmount;
-        _transactionType = 'Cash In';
-      } else {
-        _totalCashOut = _totalCashOut! + parsedAmount;
-        _netBalance = _netBalance! - parsedAmount;
-        _transactionType = 'Cash Out';
-      }
-
-      log('New Net Balance: $_netBalance');
       Transaction newTransaction = Transaction(
         bookTitle: bookTitle.text,
-        netBalance: netBalance,
-        cashInAmount: cashInAmount,
-        cashOutAmount: cashOutAmount,
-        type: transactionType,
+        netBalance: _netBalance,
+        cashInAmount: _cashInAmount,
+        cashOutAmount: _cashOutAmount,
+        type: _transactionType,
         dateTime: formattedDate,
         purpose: purpose.text,
         modeOfPayment: _selectedPaymentMode,
-        balanceAfterTransaction: netBalance,
+        balanceAfterTransaction: _netBalance,
         time: formattedTime,
       );
       _bookList[_selectedBookIndex!].addTransaction(newTransaction);
@@ -111,6 +104,12 @@ class HomeProvider extends ChangeNotifier {
     value
         ? _cashInAmount = double.tryParse(amount.text)
         : _cashOutAmount = double.tryParse(amount.text);
+    notifyListeners();
+  }
+
+  void updateTransactionType(bool value) {
+    value ? _transactionType = 'Cash In' : _transactionType = 'Cash Out';
+    log("transaction type : $_transactionType");
     notifyListeners();
   }
 
