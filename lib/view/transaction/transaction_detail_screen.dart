@@ -77,6 +77,28 @@ class _TransactionDetailScreenState extends State<TransactionDetailScreen> {
                               .toString()),
                         ],
                       ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text("Transaction Date: "),
+                          Text(homeProvider
+                              .bookList[homeProvider.selectedBookIndex]
+                              .transaction[widget.transactionIndex!]
+                              .dateTime
+                              .toString()),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text("Transaction Time: "),
+                          Text(homeProvider
+                              .bookList[homeProvider.selectedBookIndex]
+                              .transaction[widget.transactionIndex!]
+                              .time
+                              .toString()),
+                        ],
+                      ),
                     ],
                   )),
             ],
