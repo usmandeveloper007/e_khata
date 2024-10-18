@@ -99,6 +99,17 @@ class _TransactionDetailScreenState extends State<TransactionDetailScreen> {
                               .toString()),
                         ],
                       ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text("Net Balance: "),
+                          Text(homeProvider
+                              .bookList[homeProvider.selectedBookIndex]
+                              .transaction[widget.transactionIndex!]
+                              .netBalance
+                              .toString()),
+                        ],
+                      ),
                     ],
                   )),
             ],
