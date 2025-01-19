@@ -15,7 +15,6 @@ class _TransactionScreenState extends State<TransactionScreen> {
     return SafeArea(
       child: Consumer<HomeProvider>(
         builder: (context, homeProvider, child) {
-          homeProvider.transactionLog();
           return Scaffold(
             body: Column(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -355,27 +354,31 @@ class _TransactionScreenState extends State<TransactionScreen> {
             bottomNavigationBar: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                CustomButton(
-                  onPress: () {
-                    homeProvider.paymentType(true);
-                    homeProvider.updateTransactionType(true);
-                    AddTransaction.showAddTransactionBottomSheet(
-                        context, homeProvider);
-                  },
-                  text: AppStrings.cashIn,
-                  width: context.screenWidth * 0.45,
-                  backgroundColor: AppColors.greenColor,
+                Expanded(
+                  child: CustomButton(
+                    onPress: () {
+                      homeProvider.paymentType(true);
+                      homeProvider.updateTransactionType(true);
+                      AddTransaction.showAddTransactionBottomSheet(
+                          context, homeProvider);
+                    },
+                    text: AppStrings.cashIn,
+                    width: context.screenWidth * 0.45,
+                    backgroundColor: AppColors.greenColor,
+                  ),
                 ),
-                CustomButton(
-                  onPress: () {
-                    homeProvider.paymentType(false);
-                    homeProvider.updateTransactionType(false);
-                    AddTransaction.showAddTransactionBottomSheet(
-                        context, homeProvider);
-                  },
-                  text: AppStrings.cashOut,
-                  width: context.screenWidth * 0.45,
-                  backgroundColor: AppColors.redColor,
+                Expanded(
+                  child: CustomButton(
+                    onPress: () {
+                      homeProvider.paymentType(false);
+                      homeProvider.updateTransactionType(false);
+                      AddTransaction.showAddTransactionBottomSheet(
+                          context, homeProvider);
+                    },
+                    text: AppStrings.cashOut,
+                    width: context.screenWidth * 0.45,
+                    backgroundColor: AppColors.redColor,
+                  ),
                 )
               ],
             ),

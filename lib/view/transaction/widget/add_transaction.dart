@@ -164,7 +164,7 @@ class AddTransaction {
                       homeProvider
                           .addTransactionToSelectedBook(homeProvider.isCashIn!);
 
-                      homeProvider.transactionLog();
+                      // homeProvider.transactionLog();
                       homeProvider.amount.clear();
                       homeProvider.purpose.clear();
                       Navigator.of(context).pop();

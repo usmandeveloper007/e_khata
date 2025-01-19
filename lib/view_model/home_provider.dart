@@ -5,27 +5,27 @@ import 'package:intl/intl.dart';
 
 class HomeProvider extends ChangeNotifier {
   HomeProvider() {
-    transactionLog();
+    // transactionLog();
     updateNullBalances();
   }
-  void transactionLog() {
-    // Log all transactions in Map format
-    final transactions = _bookList[_selectedBookIndex!].transaction.map((t) {
-      return {
-        'bookTitle': t.bookTitle,
-        'netBalance': t.netBalance,
-        'cashInAmount': t.cashInAmount,
-        'cashOutAmount': t.cashOutAmount,
-        'balanceAfterTransaction': t.balanceAfterTransaction,
-        'time': t.time,
-        'type': t.type,
-        'dateTime': t.dateTime,
-        'purpose': t.purpose,
-        'modeOfPayment': t.modeOfPayment,
-      };
-    }).toList();
-    log("All Transactions for the book title : $_selectedBookTitle are --> $transactions");
-  }
+  // void transactionLog() {
+  //   // Log all transactions in Map format
+  //   final transactions = _bookList[_selectedBookIndex!].transaction.map((t) {
+  //     return {
+  //       'bookTitle': t.bookTitle,
+  //       'netBalance': t.netBalance,
+  //       'cashInAmount': t.cashInAmount,
+  //       'cashOutAmount': t.cashOutAmount,
+  //       'balanceAfterTransaction': t.balanceAfterTransaction,
+  //       'time': t.time,
+  //       'type': t.type,
+  //       'dateTime': t.dateTime,
+  //       'purpose': t.purpose,
+  //       'modeOfPayment': t.modeOfPayment,
+  //     };
+  //   }).toList();
+  //   log("All Transactions for the book title : $_selectedBookTitle are --> $transactions");
+  // }
 
   TextEditingController bookTitle = TextEditingController();
   TextEditingController amount = TextEditingController();
